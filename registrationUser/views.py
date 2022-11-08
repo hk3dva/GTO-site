@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
-from .forms import createEventForm
-
 
 # Create your views here.
 def register(request):
@@ -51,7 +49,7 @@ def logIn(request):
 
 def logOut(request):
     logout(request)
-    return redirect('/')
+    return redirect('/register')
 
 def index(request):
 
@@ -63,27 +61,3 @@ def index(request):
     }
     return render(request, 'registrationUser/index.html', context)
 
-
-def createEvent(request):
-    if request.method == "POST":
-        form = createEventForm(request.POST)
-        if form.is_valid():
-            return render(request, 'registrationUser/resCreate.html',
-                          {
-                              'name' : form.cleaned_data['name'],
-                              'members' : form.cleaned_data['members']
-                          })
-    else:
-        form = createEventForm()
-
-    context = {
-        'form' : form,
-    }
-    return render(request, 'registrationUser/Event.html', context)
-
-def resCreate(request):
-    name = ''
-    context = {
-        'name' : name,
-    }
-    return render(request, 'registrationUser/resCreate.html', context)

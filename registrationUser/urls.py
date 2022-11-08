@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 from .views import *
@@ -11,6 +11,4 @@ urlpatterns = [
     path('resReg/', resReg, name='resReg'),
     path('resLog/', resLog, name='resLog'),
     path('Log/', Log, name='Log'),
-    path('Event/', createEvent, name='Event'),
-    path('resCreate/', resCreate, name='resCreate'),
 ]

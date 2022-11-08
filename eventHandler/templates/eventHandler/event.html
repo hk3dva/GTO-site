@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Мероприятия</h1>
+
+    <li><a href="{% url 'eventCreate' %}">Создать мероприятие</a></li>
+    <li><a href="{% url 'teamCreate' %}">Создать команду</a></li>
+
+<h3>Список мероприятий:</h3>
+{% for el in mp %}
+    <li><h3>{{ el.name }}</h3>
+        <p>Дата начала: {{ el.date }}</p>
+        <p>Время начала: {{ el.time }}</p>
+        <p>Участники:</p>
+        </li>
+        <a href="{% url 'eventDelete' el.event_id %}">Удалить</a>
+        <a href="{% url 'eventUpdate' el.event_id %}">Изменить</a>
+{% endfor %}
+
+<h3>Список команд</h3>
+{% for el in team %}
+<li>
+    <p>Название: {{ el.name}}</p>
+    <p>Тренер: {{ el.trainer }}</p>
+    <p>Спортсмены: {{ el.athletes }}</p>
+    <a href="{% url 'teamDelete' el.team_id %}">Удалить</a>
+    <a href="{% url 'teamUpdate' el.team_id %}">Изменить</a>
+</li>
+{% endfor %}
+
+</body>
+</html>
