@@ -15,7 +15,13 @@
     <li><h3>{{ el.name }}</h3>
         <p>Дата начала: {{ el.date }}</p>
         <p>Время начала: {{ el.time }}</p>
-        <p>Участники:</p>
+        <p>Участники:
+            {% for el1 in el.teams.all %}
+            <p>
+                <li>{{ el1.name }}</li>
+            </p>
+            {% endfor %}
+        </p>
         </li>
         <a href="{% url 'eventDelete' el.event_id %}">Удалить</a>
         <a href="{% url 'eventUpdate' el.event_id %}">Изменить</a>
@@ -24,9 +30,22 @@
 <h3>Список команд</h3>
 {% for el in team %}
 <li>
-    <p>Название: {{ el.name}}</p>
-    <p>Тренер: {{ el.trainer }}</p>
-    <p>Спортсмены: {{ el.athletes }}</p>
+    <p>Название: {{ el.name}} </p>
+    <p>Тренер:
+        {% for el1 in el.treners.all %}
+        <p>
+            <li>{{ el1.username }}</li>
+        </p>
+        {% endfor %}
+    </p>
+    <p>Спортсмены:
+
+        {% for el1 in el.athletes.all %}
+        <p>
+            <li>{{ el1.username }}</li>
+        </p>
+        {% endfor %}
+    </p>
     <a href="{% url 'teamDelete' el.team_id %}">Удалить</a>
     <a href="{% url 'teamUpdate' el.team_id %}">Изменить</a>
 </li>

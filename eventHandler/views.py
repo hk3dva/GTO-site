@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
 from .forms import createEventForm, createTeamForm
-from .models import Event, Team
+from .models import Event, Team, TeamEvent
 from django.views.generic import DetailView, DeleteView, UpdateView
 
 
 # Create your views here.
 def index(request):
-    eventList = Event.objects.all()
+    eventNameList = Event.objects.all()
     teamList = Team.objects.all()
     context = {
-        'mp' : eventList,
+        'mp' : eventNameList,
         'team' : teamList,
     }
     return render(request, 'eventHandler/event.html', context)
