@@ -36,13 +36,14 @@ class Event(models.Model):
     name = models.TextField(blank=True, null=True)
     date = models.DateField(blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
-    type_sport = models.ForeignKey('TypeSport', models.DO_NOTHING)
+    type_sport = models.ManyToManyField('TypeSport', related_name='typesports_set', through="TypeSportOnEvent")
     teams = models.ManyToManyField('Team', related_name='teams_set', through="TeamHasEvent")
+    persons = models.ManyToManyField(AuthUser, related_name='persons_set', through="UserEvent")
 
     class Meta:
         managed = False
         db_table = 'event'
-        unique_together = (('event_id', 'type_sport'),)
+
 
     def get_absolute_url(self):
         return '/event'
@@ -67,7 +68,7 @@ class SportObject(models.Model):
     name = models.CharField(max_length=1000, blank=True, null=True)
     place = models.CharField(max_length=1000, blank=True, null=True)
     type_sport = models.ForeignKey('TypeSport', models.DO_NOTHING, blank=True, null=True)
-    owner = models.ForeignKey(Organization, models.DO_NOTHING, db_column='owner')
+    owner = models.ForeignKey(Organization, models.DO_NOTHING, db_column='owner', related_name = "SportObject_owner")
 
     class Meta:
         managed = False
@@ -123,6 +124,14 @@ class TypeSport(models.Model):
         return f'{self.name}'
 
 
+class TypeSportOnEvent(models.Model):
+    sportType = models.OneToOneField(TypeSport, models.DO_NOTHING, primary_key=True)
+    event = models.ForeignKey(Event, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'typesportonevent'
+
 class UserCompound(models.Model):
     user = models.OneToOneField(AuthUser, models.DO_NOTHING, primary_key=True)
     compound = models.OneToOneField(Compound, models.DO_NOTHING, db_column='compound')
@@ -144,10 +153,16 @@ class UserEvent(models.Model):
 
 
 class UserResult(models.Model):
-    user = models.OneToOneField(AuthUser, models.DO_NOTHING, primary_key=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING, unique=True,  primary_key=True, related_name = "user_result_set")
     result = models.CharField(max_length=45, blank=True, null=True)
     sport_type = models.ForeignKey(TypeSport, models.DO_NOTHING, db_column='sport_type', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'user_result'
+
+    def __str__(self):
+        return f'{self.user.username} {self.result}'
+    
+    def get_absolute_url(self):
+        return '/event'

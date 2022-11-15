@@ -13,10 +13,25 @@ class createCompound(ModelForm):
         model = Compound
         fields = ['athlets', 'trainers']
 
+class createOrganization(ModelForm):
+    class Meta:
+        model = Organization
+        fields = ['name']
+
+class createSportObject(ModelForm):
+    class Meta:
+        model =  SportObject
+        fields = ['name', 'place', 'type_sport', 'owner']
+
+class createUserResult(ModelForm):
+    class Meta:
+        model =  UserResult
+        fields = ['user', 'result', 'sport_type']
+
 class createEventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'date', 'time', 'type_sport', 'teams']
+        fields = ['name', 'date', 'time', 'type_sport', 'teams', 'persons']
         widgerts = {
             'name' : forms.TextInput(),
             'date' : forms.DateField(),

@@ -15,5 +15,9 @@ urlpatterns = [
 
     path('sportCreate/', sportCreate, name='sportCreate'),
     path('compoundCreate/', compoundCreate, name='compoundCreate'),
+    path('organizationСreate/', organizationСreate, name='organizationСreate'),
+    path('sportObjectCreate/', sportObjectCreate, name='sportObjectCreate'),
+    path('UserResultCreate/', UserResultCreate, name='UserResultCreate'),
+    path('UserResultCreate/<int:pk>/update', UserResultUpdate.as_view(), name='UserResultUpdate'),
 
 ]
