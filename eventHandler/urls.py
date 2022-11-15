@@ -12,4 +12,8 @@ urlpatterns = [
     path('teamCreate/', teamCreate, name='teamCreate'),
     path('team/<int:pk>/update', teamUpdate.as_view(), name='teamUpdate'),
     path('team/<int:pk>/delete', teamDelete.as_view(), name='teamDelete'),
+
+    path('sportCreate/', sportCreate, name='sportCreate'),
+    path('compoundCreate/', compoundCreate, name='compoundCreate'),
+
 ]

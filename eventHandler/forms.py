@@ -3,10 +3,20 @@ from django.forms import ModelForm
 from .models import *
 from django.contrib.auth.models import User
 
+class createSportType(ModelForm):
+    class Meta:
+        model = TypeSport
+        fields = ['name']
+
+class createCompound(ModelForm):
+    class Meta:
+        model = Compound
+        fields = ['athlets', 'trainers']
+
 class createEventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'date', 'time', 'type_sport']
+        fields = ['name', 'date', 'time', 'type_sport', 'teams']
         widgerts = {
             'name' : forms.TextInput(),
             'date' : forms.DateField(),
@@ -16,22 +26,23 @@ class createEventForm(ModelForm):
 class createTeamForm(ModelForm):
     # treners =  forms.ModelMultipleChoiceField(
     #     queryset=User.objects.filter(groups__name='trainers'),
-    #     widget=forms.CheckboxSelectMultiple()
-    # )
+    #     widget=forms.CheckboxSelectMultiple())
     # athletes = forms.ModelMultipleChoiceField(
     #     queryset=User.objects.filter(groups__name='sportsman'),
-    #     widget=forms.CheckboxSelectMultiple()
-    # )
+    #     widget=forms.CheckboxSelectMultiple())
     class Meta:
         model = Team
-        fields = ['name', 'treners', 'athletes']
+        fields = ['name', 'compound']
         widgets = {
             'name' : forms.TextInput(),
-            'treners' : forms.CheckboxSelectMultiple(),
-            'athletes' : forms.CheckboxSelectMultiple(),
         }
 
     # def __init__(self, *args, **kwargs):
     #     super(createTeamForm, self).__init__(*args, **kwargs)
     #     self.fields['treners'].queryset = User.objects.filter(groups__name='trainers')
     #     self.fields['athletes'].queryset = User.objects.filter(groups__name='sportsman')
+#
+# def createTrainerTeamForm(ModelForm):
+#     class Meta:
+#         model = Compound
+#         fields = ['trainer', 'students']

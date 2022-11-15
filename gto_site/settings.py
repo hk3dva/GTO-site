@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'gto_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'gto',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',

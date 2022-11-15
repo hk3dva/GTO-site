@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import createEventForm, createTeamForm
-from .models import Event, Team, TeamEvent
+from .forms import *
+from .models import *
 from django.views.generic import DetailView, DeleteView, UpdateView
 
 
@@ -13,6 +13,34 @@ def index(request):
         'team' : teamList,
     }
     return render(request, 'eventHandler/event.html', context)
+
+def sportCreate(request):
+    if request.method == "POST":
+        form = createSportType(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/event')
+    else:
+        form = createSportType()
+
+    context = {
+        'form' : form,
+    }
+    return render(request, 'eventHandler/sportCreate.html', context)
+
+def compoundCreate(request):
+    if request.method == "POST":
+        form = createCompound(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/event')
+    else:
+        form = createCompound()
+
+    context = {
+        'form' : form,
+    }
+    return render(request, 'eventHandler/compound.html', context)
 
 def createEvent(request):
     if request.method == "POST":

@@ -9,10 +9,17 @@
 
     <li><a href="{% url 'eventCreate' %}">Создать мероприятие</a></li>
     <li><a href="{% url 'teamCreate' %}">Создать команду</a></li>
+    <li><a href="{% url 'sportCreate' %}">Создать Вид спорта</a></li>
+    <li><a href="{% url 'compoundCreate' %}">Создать группу</a></li>
 
 <h3>Список мероприятий:</h3>
 {% for el in mp %}
     <li><h3>{{ el.name }}</h3>
+        <p>Виды спорта:
+        {% for sporttype in el.type_sport.all %}
+            <li> {{ sporttype }} </li>
+        {% endfor %}
+        </p>
         <p>Дата начала: {{ el.date }}</p>
         <p>Время начала: {{ el.time }}</p>
         <p>Участники:
@@ -32,7 +39,7 @@
 <li>
     <p>Название: {{ el.name}} </p>
     <p>Тренер:
-        {% for el1 in el.treners.all %}
+        {% for el1 in el.compound.trainers.all %}
         <p>
             <li>{{ el1.username }}</li>
         </p>
@@ -40,7 +47,7 @@
     </p>
     <p>Спортсмены:
 
-        {% for el1 in el.athletes.all %}
+        {% for el1 in el.compound.athlets.all %}
         <p>
             <li>{{ el1.username }}</li>
         </p>
