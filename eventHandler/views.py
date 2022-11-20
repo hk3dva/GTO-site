@@ -5,25 +5,32 @@ from django.views.generic import DetailView, DeleteView, UpdateView
 
 
 # Create your views here.
-def index(request):
+def getBaseContext():
     eventNameList = Event.objects.all()
     teamList = Team.objects.all()
     organizationList = Organization.objects.all()
     userList = AuthUser.objects.all()
+    compounds = Compound.objects.all()
+    sportTypes = TypeSport.objects.all()
     context = {
-        'mp' : eventNameList,
-        'team' : teamList,
-        'org' : organizationList,
-        'user' : userList,
+        'mp': eventNameList,
+        'team': teamList,
+        'org': organizationList,
+        'users': userList,
+        'compound': compounds,
+        'sportTypes': sportTypes
     }
-    return render(request, 'eventHandler/event.html', context)
+    return context
+
+def index(request):
+    return render(request, 'eventHandler/index.html', getBaseContext())
 
 def sportCreate(request):
     if request.method == "POST":
         form = createSportType(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/event')
+            return redirect('/sportType')
     else:
         form = createSportType()
 
@@ -37,7 +44,7 @@ def sportObjectCreate(request):
         form = createSportObject(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/event')
+            return redirect('/organization')
     else:
         form = createSportObject()
 
@@ -46,12 +53,43 @@ def sportObjectCreate(request):
     }
     return render(request, 'eventHandler/sportObjectCreate.html', context)
 
+def sportType(request):
+    return render(request, 'eventHandler/sportType.html', getBaseContext())
+
+def users(request):
+    return render(request, 'eventHandler/users.html', getBaseContext())
+
+class userUpdate(UpdateView):
+    model = AuthUser
+    template_name = 'eventHandler/userUpdate.html'
+    form_class = createUser
+
+# def userUpdate(request):
+#     if request.method == "POST":
+#         form = createUser(request.POST)
+#         if form.is_valid():
+#             form.password = make_password(form.password)
+#             form.save()
+#             return redirect('/event')
+#     else:
+#         form = createUser()
+#
+#     context = {
+#         'form' : form,
+#     }
+#     return render(request, 'eventHandler/UserResultCreate.html', context)
+
+class userDelete(DeleteView):
+    model = AuthUser
+    success_url = '/users'
+    template_name = 'eventHandler/userDelete.html'
+
 def UserResultCreate(request):
     if request.method == "POST":
         form = createUserResult(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/event')
+            return redirect('/users')
     else:
         form = createUserResult()
 
@@ -65,12 +103,15 @@ class UserResultUpdate(UpdateView):
     template_name = 'eventHandler/UserResultCreate.html'
     form_class = createUserResult
 
+def compound(request):
+    return render(request, 'eventHandler/groups.html', getBaseContext())
+
 def compoundCreate(request):
     if request.method == "POST":
         form = createCompound(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/event')
+            return redirect('/groups')
     else:
         form = createCompound()
 
@@ -79,12 +120,15 @@ def compoundCreate(request):
     }
     return render(request, 'eventHandler/compound.html', context)
 
+def organization(request):
+    return render(request, 'eventHandler/organization.html', getBaseContext())
+
 def organizationСreate(request):
     if request.method == "POST":
         form = createOrganization(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/event')
+            return redirect('/organization')
     else:
         form = createOrganization()
 
@@ -93,13 +137,15 @@ def organizationСreate(request):
     }
     return render(request, 'eventHandler/organizationCreate.html', context)
 
+def events(request):
+    return render(request, 'eventHandler/events.html', getBaseContext())
 
 def createEvent(request):
     if request.method == "POST":
         form = createEventForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/event')
+            return redirect('/events')
     else:
         form = createEventForm()
 
@@ -115,23 +161,25 @@ class eventUpdate(UpdateView):
 
 class eventDelete(DeleteView):
     model = Event
-    success_url = '/event'
+    success_url = '/events'
     template_name = 'eventHandler/eventDelete.html'
 
+def team(request):
+    return render(request, 'eventHandler/team.html', getBaseContext())
 
 def teamCreate(request):
     if request.method == "POST":
         form = createTeamForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/event')
+            return redirect('/team')
     else:
         form = createTeamForm()
 
     context = {
         'form' : form,
     }
-    return render(request, 'eventHandler/team.html', context)
+    return render(request, 'eventHandler/teamCreate.html', context)
 
 class teamUpdate(UpdateView):
     model = Team
@@ -140,5 +188,5 @@ class teamUpdate(UpdateView):
 
 class teamDelete(DeleteView):
     model = Team
-    success_url = '/event'
+    success_url = '/teams'
     template_name = 'eventHandler/teamDelete.html'

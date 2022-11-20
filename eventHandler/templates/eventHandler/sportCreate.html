@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1> Создать вид спорта</h1>
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> Добавить вид спорта</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Создать вид спорта</button>
+        <button class="btn btn-primary" type="submit">Добавить вид спорта</button>
     </form>
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Список организаций</h3>
+{% for el in org %}
+<li>
+    <p>Название: {{ el.name}} </p>
+    <p> Объекты: </p>
+    {% for el1 in el.SportObject_owner.all %}
+        <li>
+            <p>Название: {{ el1.name }}</p>
+            <p>Место: {{ el1.place}}</p>
+            <p>Проводимые виды спорта: {{ el1.type_sport}}</p>
+        </li>
+    {% endfor %}
+</li>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Мероприятия</h1>
+
+    <li><a href="{% url 'eventCreate' %}">Создать мероприятие</a></li>
+    <li><a href="{% url 'teamCreate' %}">Создать команду</a></li>
+    <li><a href="{% url 'sportCreate' %}">Создать Вид спорта</a></li>
+    <li><a href="{% url 'compoundCreate' %}">Создать группу</a></li>
+    <li><a href="{% url 'organizationСreate' %}">Создать организацию</a></li>
+    <li><a href="{% url 'sportObjectCreate' %}">Создать обьект для спорта</a></li>
+    <li><a href="{% url 'UserResultCreate' %}">Добавить результат пользователя по виду спорта</a></li>
+
+<h3>Список мероприятий:</h3>
+{% for el in mp %}
+    <li><h3>{{ el.name }}</h3>
+        <p>Виды спорта:
+        {% for sporttype in el.type_sport.all %}
+            <li> {{ sporttype }} </li>
+        {% endfor %}
+        </p>
+        <p>Дата начала: {{ el.date }}</p>
+        <p>Время начала: {{ el.time }}</p>
+        <p>Команды:
+            {% for el1 in el.teams.all %}
+            <p>
+                <li>{{ el1.name }}</li>
+            </p>
+            {% endfor %}
+        </p>
+        <p>Участники:
+            {% for el1 in el.persons.all %}
+                <li> {{ el1.username }} </li>
+            {% endfor %}
+        </p>
+        </li>
+        <a href="{% url 'eventDelete' el.event_id %}">Удалить</a>
+        <a href="{% url 'eventUpdate' el.event_id %}">Изменить</a>
+{% endfor %}
+
+<h3>Список команд</h3>
+{% for el in team %}
+<li>
+    <p>Название: {{ el.name}} </p>
+    <p>Тренер:
+        {% for el1 in el.compound.trainers.all %}
+        <p>
+            <li>{{ el1.username }}</li>
+        </p>
+        {% endfor %}
+    </p>
+    <p>Спортсмены:
+
+        {% for el1 in el.compound.athlets.all %}
+        <p>
+            <li>{{ el1.username }}</li>
+        </p>
+        {% endfor %}
+    </p>
+    <a href="{% url 'teamDelete' el.team_id %}">Удалить</a>
+    <a href="{% url 'teamUpdate' el.team_id %}">Изменить</a>
+</li>
+{% endfor %}
+
+
+<h3>Список организаций</h3>
+{% for el in org %}
+<li>
+    <p>Название: {{ el.name}} </p>
+    <p>Здания которые принадлежат: </p>
+    {% for el1 in el.SportObject_owner.all %}
+        <li>
+            <p>{{ el1.name }}</p>
+            <p>{{ el1.place}}</p>
+            <p>{{ el1.type_sport}}</p>
+        </li>
+    {% endfor %}
+</li>
+{% endfor %}
+
+<h3>Список пользователей</h3>
+{% for el in users %}
+<li>
+    <p>Логин: {{ el.username}} </p>
+        {% for el1 in el.user_result_set.all %}
+        <li>
+            <p>{{ el1.sport_type}} : {{ el1.result }}
+                <a href="{% url 'UserResultUpdate' el.id %}">Изменить</a>
+            </p>
+        </li>
+    {% endfor %}
+
+</li>
+{% endfor %}
+{% endblock %}

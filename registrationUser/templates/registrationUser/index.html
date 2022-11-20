@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     <h1> Приветствую {{ name }}</h1>
         <li><a href="{% url 'register' %}">Регистарция</a></li>
         <li><a href="{% url 'login' %}">Авторизация</a></li>
         <li><a href="{% url 'logout' %}">Разлогиниться</a></li>
-</body>
-</html>
+{% endblock %}

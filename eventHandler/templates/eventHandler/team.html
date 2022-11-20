@@ -1,15 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1> Создать Команду</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Создать Команду</button>
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Список команд</h3>
+{% for el in team %}
+<li>
+    <p>Название: {{ el.name}} </p>
+    <p>Тренер:
+        {% for el1 in el.compound.trainers.all %}
+        <p>
+            <li>{{ el1.username }}</li>
+        </p>
+        {% endfor %}
+    </p>
+    <p>Спортсмены:
+
+        {% for el1 in el.compound.athlets.all %}
+        <p>
+            <li>{{ el1.username }}</li>
+        </p>
+        {% endfor %}
+    </p>
+    <div class="btn-group" role="group">
+        <a class="btn btn-primary" href="{% url 'teamUpdate' el.team_id %}" role="button">Изменить</a>
+        <a class="btn btn-danger" href="{% url 'teamDelete' el.team_id %}" role="button">Удалить</a>
+    </div>
+</li>
+{% endfor %}
+{% endblock %}

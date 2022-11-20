@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <script type=text/javascript src="{% static 'js/jquery.js' %}"></script>
+    <script type=text/javascript src="{% static 'js/jquery.multi-select.js' %}"></script>
+    <script type=text/javascript src="{% static 'js/main.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/multi-select.css' %}">
+    <title>Title</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-xl navbar-dark" style="background-color: #1856FF">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a id="navGroupDropEvents" class="nav-link dropdown-toggle" style="background-color: #1856FF" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Мероприятия
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navGroupDropEvents">
+                          <a class="dropdown-item" href="{% url 'events' %}">Просмотр мероприятий</a>
+                          <a class="dropdown-item" href="{% url 'eventCreate' %}">Добавить мероприятие</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="navGroupDropTeams" class="nav-link dropdown-toggle" style="background-color: #1856FF" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Команды
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navGroupDropTeams">
+                          <a class="dropdown-item" href="{% url 'team' %}">Просмотр команд</a>
+                          <a class="dropdown-item" href="{% url 'teamCreate' %}">Добавить команду</a>
+                        </div>
+                     </li>
+                    <li class="nav-item dropdown">
+                        <a id="navGroupDropOrganizations" class="nav-link dropdown-toggle" style="background-color: #1856FF" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Организации
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navGroupDropOrganizations">
+                          <a class="dropdown-item" href="{% url 'organization' %}">Просмотр организаций</a>
+                          <a class="dropdown-item" href="{% url 'organizationСreate' %}">Добавить организацию</a>
+                            <a class="dropdown-item" href="{% url 'sportObjectCreate' %}">Добавить объект для спорта</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="navGroupDropSportTypes" class="nav-link dropdown-toggle" style="background-color: #1856FF" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Виды спорта
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navGroupDropSportTypes">
+                          <a class="dropdown-item" href="{% url 'sportType' %}">Просмотр видов спорта</a>
+                          <a class="dropdown-item" href="{% url 'sportCreate' %}">Добавить вид спорта</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="navGroupDropUsers" class="nav-link dropdown-toggle" style="background-color: #1856FF" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Пользователи
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navGroupDropUsers">
+                          <a class="dropdown-item" href="{% url 'users' %}">Просмотр пользователей</a>
+                          <a class="dropdown-item" href="{% url 'UserResultCreate' %}">Добавить результат пользователя по виду спорта</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="navGroupDropGroups" class="nav-link dropdown-toggle" style="background-color: #1856FF" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Группы
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navGroupDropGroups">
+                          <a class="dropdown-item" href="{% url 'groups' %}">Просмотр групп</a>
+                          <a class="dropdown-item" href="{% url 'compoundCreate' %}">Добавить группу</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="nav navbar-nav" >
+                {% if user.is_anonymous %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'login' %}">Войти</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+                    </li>
+                {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </nav>
+{% block content %}{% endblock %}
+</body>
+</html>

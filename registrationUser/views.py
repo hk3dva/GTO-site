@@ -9,7 +9,7 @@ def register(request):
         registerForm = UserCreationForm(request.POST)
         if registerForm.is_valid():
             registerForm.save()
-            return redirect('/resReg')
+            return redirect('/auth/login')
     else:
         registerForm = UserCreationForm()
 
@@ -30,7 +30,7 @@ def Log(request):
 
 def logIn(request):
     if request.user.is_authenticated:
-        return render(request, 'registrationUser/Log.html')
+        return render(request, 'eventHandler/events.html')
 
     if request.method == "POST":
         loginForm = AuthenticationForm(request=request,data=request.POST)
@@ -40,7 +40,7 @@ def logIn(request):
             user = authenticate(username=uname, password=upass)
             if user is not None:
                 login(request,user)
-                return render(request, 'registrationUser/resLog.html')
+                return render(request, 'eventHandler/events.html')
     else:
         loginForm = AuthenticationForm()
     return render(request,'registrationUser/login.html', {'form':loginForm})
@@ -49,7 +49,7 @@ def logIn(request):
 
 def logOut(request):
     logout(request)
-    return redirect('/register')
+    return redirect('/auth/login')
 
 def index(request):
 

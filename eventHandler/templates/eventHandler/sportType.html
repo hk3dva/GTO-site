@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Список видов спорта</h3>
+{% for el in sportTypes %}
+<li>
+    <p>Название: {{ el.name}} </p>
+</li>
+{% endfor %}
+{% endblock %}

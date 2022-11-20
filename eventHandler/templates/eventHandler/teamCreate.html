@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1> Изменить команду</h1>
+    <h1> Добавить Команду</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Изменить команду</button>
+        <button class="btn btn-primary" type="submit">Добавить</button>
     </form>
 {% endblock %}

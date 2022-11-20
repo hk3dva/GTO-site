@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1> Удалить ивент</h1>
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> Удалить мероприятие</h1>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Удалить ивент</button>
+        <button class="btn btn-danger" type="submit">Удалить мероприятие</button>
     </form>
-</body>
-</html>
+{% endblock %}

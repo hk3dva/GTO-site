@@ -32,10 +32,19 @@ class createEventForm(ModelForm):
     class Meta:
         model = Event
         fields = ['name', 'date', 'time', 'type_sport', 'teams', 'persons']
-        widgerts = {
+        widgets = {
             'name' : forms.TextInput(),
-            'date' : forms.DateField(),
-            'time' : forms.TimeField(),
+            'date' : forms.DateInput(),
+            'time' : forms.TimeInput(),
+        }
+
+class createUser(ModelForm):
+    class Meta:
+        model = AuthUser
+        fields = ['username', 'password', 'email', 'first_name', 'last_name', 'birthday_date']
+        widgets = {
+            'birthday_date': forms.DateInput(),
+            'password': forms.PasswordInput()
         }
 
 class createTeamForm(ModelForm):

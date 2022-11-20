@@ -19,6 +19,9 @@ class AuthUser(models.Model):
         managed = False
         db_table = 'auth_user'
 
+    def get_absolute_url(self):
+        return '/users'
+
     def __str__(self):
         return f'{self.username} {self.first_name} {self.last_name}'
 
@@ -46,7 +49,7 @@ class Event(models.Model):
 
 
     def get_absolute_url(self):
-        return '/event'
+        return '/events'
 
     def __str__(self):
         return f"{self.name}, {self.date}"
@@ -165,4 +168,4 @@ class UserResult(models.Model):
         return f'{self.user.username} {self.result}'
     
     def get_absolute_url(self):
-        return '/event'
+        return '/users'

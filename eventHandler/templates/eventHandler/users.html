@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Список пользователей</h3>
+    {% for el in users %}
+    <li>
+        <p>Логин: {{ el.username}} </p>
+        {% for el1 in el.user_result_set.all %}
+        <li> Результаты:
+            <p>{{ el1.sport_type}} : {{ el1.result }}
+                <a class="btn btn-primary" href="{% url 'UserResultUpdate' el.id %}" role="button">Изменить</a>
+            </p>
+        </li>
+        {% endfor %}
+        {% if user.is_superuser or user.get_username == el.username%}
+            <div class="btn-group" role="group">
+                <a class="btn btn-primary" href="{% url 'userUpdate' el.id %}" role="button">Изменить</a>
+                <a class="btn btn-danger" href="{% url 'userDelete' el.id %}" role="button">Удалить</a>
+            </div>
+        {% endif %}
+    </li>
+    {% endfor %}
+{% endblock %}

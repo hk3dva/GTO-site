@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Список мероприятий:</h3>
+{% for el in mp %}
+    <li><h3>{{ el.name }}</h3>
+        <p>Виды спорта:
+        {% for sporttype in el.type_sport.all %}
+            <li> {{ sporttype }} </li>
+        {% endfor %}
+        </p>
+        <p>Дата начала: {{ el.date }}</p>
+        <p>Время начала: {{ el.time }}</p>
+        <p>Команды:
+            {% for el1 in el.teams.all %}
+            <p>
+                <li>{{ el1.name }}</li>
+            </p>
+            {% endfor %}
+        </p>
+        <p>Участники:
+            {% for el1 in el.persons.all %}
+                <li> {{ el1.username }} </li>
+            {% endfor %}
+        </p>
+        </li>
+        <div class="btn-group" role="group">
+                <a class="btn btn-primary" href="{% url 'eventUpdate' el.event_id %}" role="button">Изменить</a>
+                <a class="btn btn-danger" href="{% url 'eventDelete' el.event_id %}" role="button">Удалить</a>
+        </div>
+{% endfor %}
+{% endblock %}

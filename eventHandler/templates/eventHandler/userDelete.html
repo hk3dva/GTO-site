@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> Удалить пользователя</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button  class="btn btn-danger" type="submit">Удалить пользователя</button>
+    </form>
+{% endblock %}

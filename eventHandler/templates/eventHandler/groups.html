@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Список групп</h3>
+{% for el in compound %}
+<li> Группа
+    <p>Тренер:
+        {% for el1 in el.trainers.all %}
+        <p>
+            <li>{{ el1.username }}</li>
+        </p>
+        {% endfor %}
+    </p>
+    <p>Спортсмены:
+
+        {% for el1 in el.athlets.all %}
+        <p>
+            <li>{{ el1.username }}</li>
+        </p>
+        {% endfor %}
+    </p>
+</li>
+{% endfor %}
+{% endblock %}
