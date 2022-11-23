@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.models import Group, User
 
 # Create your views here.
 def register(request):
@@ -9,7 +10,8 @@ def register(request):
         registerForm = UserCreationForm(request.POST)
         if registerForm.is_valid():
             registerForm.save()
-            return redirect('/resReg')
+            Group.objects.get(name='sportsman').user_set.add(User.objects.last())
+            return redirect('resReg')
     else:
         registerForm = UserCreationForm()
 

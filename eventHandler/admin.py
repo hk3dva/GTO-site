@@ -14,9 +14,8 @@ from .models import *
 
 admin.site.register(Team)
 
-# admin.site.register(Compound)
-# admin.site.register(Compound_student)
-#
+admin.site.register(Compound)
+
 # admin.site.register(UserEvent)
 
 # admin.site.register(Event)

@@ -74,6 +74,9 @@ def compoundCreate(request):
     else:
         form = createCompound()
 
+    form.fields["trainers"].queryset = User.objects.filter(groups__name='trainers')
+    form.fields["athlets"].queryset = User.objects.filter(groups__name='sportsman')
+
     context = {
         'form' : form,
     }
@@ -103,10 +106,26 @@ def createEvent(request):
     else:
         form = createEventForm()
 
+    form.fields["persons"].queryset = User.objects.filter(groups__name='sportsman')
+
     context = {
         'form' : form,
     }
     return render(request, 'eventHandler/eventCreate.html', context)
+
+# def appoinTrainer(request):
+#     if request.method == "POST":
+#         form = createEventForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('/event')
+#     else:
+#         form = createEventForm()
+#
+#     context = {
+#         'form' : form,
+#     }
+#     return render(request, 'eventHandler/appointTrainer.html', context)
 
 class eventUpdate(UpdateView):
     model = Event

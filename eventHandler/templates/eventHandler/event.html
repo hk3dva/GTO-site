@@ -86,13 +86,12 @@
 {% for el in user %}
 <li>
     <p>Логин: {{ el.username}} </p>
+    <p>Результаты пользователя: </p>
         {% for el1 in el.user_result_set.all %}
-        <li>
             <p>{{ el1.sport_type}} : {{ el1.result }}
                 <a href="{% url 'UserResultUpdate' el.id %}">Изменить</a>
             </p>
-        </li>
-    {% endfor %}
+        {% endfor %}
 
 </li>
 {% endfor %}

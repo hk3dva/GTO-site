@@ -34,17 +34,11 @@ class createEventForm(ModelForm):
         fields = ['name', 'date', 'time', 'type_sport', 'teams', 'persons']
         widgerts = {
             'name' : forms.TextInput(),
-            'date' : forms.DateField(),
-            'time' : forms.TimeField(),
+            'date' : forms.DateInput(),
+            'time' : forms.TimeInput(),
         }
 
 class createTeamForm(ModelForm):
-    # treners =  forms.ModelMultipleChoiceField(
-    #     queryset=User.objects.filter(groups__name='trainers'),
-    #     widget=forms.CheckboxSelectMultiple())
-    # athletes = forms.ModelMultipleChoiceField(
-    #     queryset=User.objects.filter(groups__name='sportsman'),
-    #     widget=forms.CheckboxSelectMultiple())
     class Meta:
         model = Team
         fields = ['name', 'compound']
@@ -52,12 +46,5 @@ class createTeamForm(ModelForm):
             'name' : forms.TextInput(),
         }
 
-    # def __init__(self, *args, **kwargs):
-    #     super(createTeamForm, self).__init__(*args, **kwargs)
-    #     self.fields['treners'].queryset = User.objects.filter(groups__name='trainers')
-    #     self.fields['athletes'].queryset = User.objects.filter(groups__name='sportsman')
-#
-# def createTrainerTeamForm(ModelForm):
-#     class Meta:
-#         model = Compound
-#         fields = ['trainer', 'students']
+# class appoinTrainerForm(Form):
+#     name = forms.

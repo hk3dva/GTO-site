@@ -163,6 +163,6 @@ class UserResult(models.Model):
 
     def __str__(self):
         return f'{self.user.username} {self.result}'
-    
+
     def get_absolute_url(self):
         return '/event'
