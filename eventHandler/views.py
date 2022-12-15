@@ -2,19 +2,26 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from django.views.generic import DetailView, DeleteView, UpdateView
-
+from django.contrib.auth.models import Group, User
 
 # Create your views here.
 def index(request):
     eventNameList = Event.objects.all()
     teamList = Team.objects.all()
-    organizationList = Organization.objects.all()
     userList = AuthUser.objects.all()
+    trainerList = User.objects.filter(groups__name='trainers')
+    sportsmansList = User.objects.filter(groups__name='sportsman')
+
+    sportList = SportType.objects.all()
+    SportObjectList = SportObject.objects.all()
     context = {
-        'mp' : eventNameList,
-        'team' : teamList,
-        'org' : organizationList,
-        'user' : userList,
+        'events' : eventNameList,
+        'teams' : teamList,
+        'users' : userList,
+        'trainers' : trainerList,
+        'sportsmans' : sportsmansList,
+        'sports' : sportList,
+        'objects' : SportObjectList,
     }
     return render(request, 'eventHandler/event.html', context)
 
@@ -46,56 +53,19 @@ def sportObjectCreate(request):
     }
     return render(request, 'eventHandler/sportObjectCreate.html', context)
 
-def UserResultCreate(request):
+def SportTypeEventcreate(request):
     if request.method == "POST":
-        form = createUserResult(request.POST)
+        form = createSportTypeEvent(request.POST)
         if form.is_valid():
             form.save()
             return redirect('/event')
     else:
-        form = createUserResult()
+        form = createSportTypeEvent()
 
     context = {
-        'form' : form,
+        'form': form,
     }
-    return render(request, 'eventHandler/UserResultCreate.html', context)
-
-class UserResultUpdate(UpdateView):
-    model = UserResult
-    template_name = 'eventHandler/UserResultCreate.html'
-    form_class = createUserResult
-
-def compoundCreate(request):
-    if request.method == "POST":
-        form = createCompound(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/event')
-    else:
-        form = createCompound()
-
-    form.fields["trainers"].queryset = User.objects.filter(groups__name='trainers')
-    form.fields["athlets"].queryset = User.objects.filter(groups__name='sportsman')
-
-    context = {
-        'form' : form,
-    }
-    return render(request, 'eventHandler/compound.html', context)
-
-def organizationСreate(request):
-    if request.method == "POST":
-        form = createOrganization(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/event')
-    else:
-        form = createOrganization()
-
-    context = {
-        'form' : form,
-    }
-    return render(request, 'eventHandler/organizationCreate.html', context)
-
+    return render(request, 'eventHandler/SportTypeEventcreate.html', context)
 
 def createEvent(request):
     if request.method == "POST":
@@ -106,26 +76,29 @@ def createEvent(request):
     else:
         form = createEventForm()
 
-    form.fields["persons"].queryset = User.objects.filter(groups__name='sportsman')
+    # form.fields["persons"].queryset = User.objects.filter(groups__name='sportsman')
 
     context = {
         'form' : form,
     }
     return render(request, 'eventHandler/eventCreate.html', context)
 
-# def appoinTrainer(request):
-#     if request.method == "POST":
-#         form = createEventForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('/event')
-#     else:
-#         form = createEventForm()
-#
-#     context = {
-#         'form' : form,
-#     }
-#     return render(request, 'eventHandler/appointTrainer.html', context)
+def trainerAppoin(request):
+    if request.method == "POST":
+        form = appoinTrainerForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get("names")
+            for el in name:
+                el.groups.clear()
+                Group.objects.get(name='trainers').user_set.add(el)
+        return redirect('/event')
+    else:
+        form = appoinTrainerForm()
+
+    context = {
+        'form' : form,
+    }
+    return render(request, 'eventHandler/appointTrainer.html', context)
 
 class eventUpdate(UpdateView):
     model = Event

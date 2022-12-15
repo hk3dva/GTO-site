@@ -5,46 +5,34 @@ from django.contrib.auth.models import User
 
 class createSportType(ModelForm):
     class Meta:
-        model = TypeSport
-        fields = ['name']
-
-class createCompound(ModelForm):
-    class Meta:
-        model = Compound
-        fields = ['athlets', 'trainers']
-
-class createOrganization(ModelForm):
-    class Meta:
-        model = Organization
-        fields = ['name']
-
-class createSportObject(ModelForm):
-    class Meta:
-        model =  SportObject
-        fields = ['name', 'place', 'type_sport', 'owner']
-
-class createUserResult(ModelForm):
-    class Meta:
-        model =  UserResult
-        fields = ['user', 'result', 'sport_type']
-
-class createEventForm(ModelForm):
-    class Meta:
-        model = Event
-        fields = ['name', 'date', 'time', 'type_sport', 'teams', 'persons']
-        widgerts = {
-            'name' : forms.TextInput(),
-            'date' : forms.DateInput(),
-            'time' : forms.TimeInput(),
-        }
+        model = SportType
+        fields = ['name', 'custom']
 
 class createTeamForm(ModelForm):
     class Meta:
         model = Team
-        fields = ['name', 'compound']
+        fields = ['name']
         widgets = {
             'name' : forms.TextInput(),
         }
 
-# class appoinTrainerForm(Form):
-#     name = forms.
+class createSportObject(ModelForm):
+    class Meta:
+        model =  SportObject
+        fields = ['name', 'address']
+
+class createEventForm(ModelForm):
+    class Meta:
+        model = Event
+        fields = ['name', 'status', 'owner', 'settings']
+        widgerts = {
+            'name' : forms.TextInput(),
+        }
+
+class createSportTypeEvent(ModelForm):
+    class Meta:
+        model = SportTypeEvent
+        fields = ['date', 'time', 'sport_object', 'sport_type']
+
+class appoinTrainerForm(forms.Form):
+    names = forms.ModelMultipleChoiceField(queryset = User.objects.filter(groups__name='sportsman'))

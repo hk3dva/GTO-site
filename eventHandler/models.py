@@ -14,6 +14,7 @@ class AuthUser(models.Model):
     birthday_date = models.DateField(blank=True, null=True)
     photo = models.TextField(blank=True, null=True)
     place_employment = models.CharField(max_length=1000, blank=True, null=True)
+    gto_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -22,147 +23,87 @@ class AuthUser(models.Model):
     def __str__(self):
         return f'{self.username} {self.first_name} {self.last_name}'
 
-class Compound(models.Model):
-    athlets = models.ManyToManyField(AuthUser, related_name='athlets_set', through="UserCompound")
-    trainers = models.ManyToManyField(AuthUser, related_name='trainers_set', through="TrainterCompound")
-
-    class Meta:
-        managed = False
-        db_table = 'compound'
-        # unique_together = (('id', 'athlets', 'trainers'),)
-
 class Event(models.Model):
-    event_id = models.AutoField(primary_key=True)
-    name = models.TextField(blank=True, null=True)
-    date = models.DateField(blank=True, null=True)
-    time = models.TimeField(blank=True, null=True)
-    type_sport = models.ManyToManyField('TypeSport', related_name='typesports_set', through="TypeSportOnEvent")
-    teams = models.ManyToManyField('Team', related_name='teams_set', through="TeamHasEvent")
-    persons = models.ManyToManyField(AuthUser, related_name='persons_set', through="UserEvent")
+    name = models.CharField(max_length=100, blank=True, null=True)
+    status = models.IntegerField(blank=True, null=True)
+    owner = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='owner')
+    settings = models.ManyToManyField('SportTypeEvent', through='SportTypeEventHasEvent')
 
     class Meta:
         managed = False
         db_table = 'event'
-
+        unique_together = (('id', 'owner'),)
 
     def get_absolute_url(self):
         return '/event'
 
     def __str__(self):
-        return f"{self.name}, {self.date}"
-
-
-class Organization(models.Model):
-    orhanization_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'organization'
-
-    def __str__(self):
-        return f'{self.name}'
-
+        return f"{self.name}"
 
 class SportObject(models.Model):
-    name = models.CharField(max_length=1000, blank=True, null=True)
-    place = models.CharField(max_length=1000, blank=True, null=True)
-    type_sport = models.ForeignKey('TypeSport', models.DO_NOTHING, blank=True, null=True)
-    owner = models.ForeignKey(Organization, models.DO_NOTHING, db_column='owner', related_name = "SportObject_owner")
+    name = models.CharField(max_length=45, blank=True, null=True)
+    address = models.CharField(max_length=45, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'sport_object'
-        unique_together = (('id', 'owner'),)
+
+    def __str__(self):
+        return f'{self.name} {self.address}'
+
+class SportType(models.Model):
+    name = models.CharField(max_length=45, blank=True, null=True)
+    custom = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sport_type'
 
     def __str__(self):
         return f'{self.name}'
 
+class SportTypeEvent(models.Model):
+    date = models.DateField(blank=True, null=True)
+    time = models.TimeField(blank=True, null=True)
+    sport_type = models.ForeignKey(SportType, models.DO_NOTHING)
+    sport_object = models.ForeignKey(SportObject, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'sport_type_event'
+        unique_together = (('id', 'sport_type', 'sport_object'),)
+
+    def __str__(self):
+        return f'{self.date} {self.time} {self.sport_object} {self.sport_type}'
+
+
+class SportTypeEventHasEvent(models.Model):
+    sport_type_event = models.OneToOneField(SportTypeEvent, models.DO_NOTHING, primary_key=True)
+    event = models.ForeignKey(Event, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'sport_type_event_has_event'
+        unique_together = (('sport_type_event', 'event'),)
+
+
+class SportsmanSportTypeEvent(models.Model):
+    team = models.OneToOneField('Team', models.DO_NOTHING, primary_key=True)
+    sportsman = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='sportsman')
+    sport_type_event = models.ForeignKey(SportTypeEvent, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'sportsman_sport_type_event'
+        unique_together = (('team', 'sportsman', 'sport_type_event'),)
+
 
 class Team(models.Model):
-    team_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=True, null=True)
-    compound = models.ForeignKey(Compound, models.DO_NOTHING, db_column='compound')
 
     class Meta:
         managed = False
         db_table = 'team'
-        unique_together = (('team_id', 'compound'),)
 
     def __str__(self):
         return f'{self.name}'
-
-
-class TeamHasEvent(models.Model):
-    team_team = models.OneToOneField(Team, models.DO_NOTHING, primary_key=True)
-    event_event = models.ForeignKey(Event, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'team_has_event'
-        unique_together = (('team_team', 'event_event'), ('team_team', 'event_event'),)
-
-
-class TrainterCompound(models.Model):
-    user = models.OneToOneField(AuthUser, models.DO_NOTHING, primary_key=True)
-    compound = models.OneToOneField(Compound, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'trainter_compound'
-        unique_together = (('user', 'compound'),)
-
-
-class TypeSport(models.Model):
-    name = models.CharField(max_length=45, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'type_sport'
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class TypeSportOnEvent(models.Model):
-    sportType = models.OneToOneField(TypeSport, models.DO_NOTHING, primary_key=True)
-    event = models.ForeignKey(Event, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'typesportonevent'
-
-class UserCompound(models.Model):
-    user = models.OneToOneField(AuthUser, models.DO_NOTHING, primary_key=True)
-    compound = models.OneToOneField(Compound, models.DO_NOTHING, db_column='compound')
-
-    class Meta:
-        managed = False
-        db_table = 'user_compound'
-        unique_together = (('user', 'compound'),)
-
-
-class UserEvent(models.Model):
-    user = models.OneToOneField(AuthUser, models.DO_NOTHING, primary_key=True)
-    event = models.ForeignKey(Event, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'user_event'
-        unique_together = (('user', 'event'),)
-
-
-class UserResult(models.Model):
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING, unique=True,  primary_key=True, related_name = "user_result_set")
-    result = models.CharField(max_length=45, blank=True, null=True)
-    sport_type = models.ForeignKey(TypeSport, models.DO_NOTHING, db_column='sport_type', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'user_result'
-
-    def __str__(self):
-        return f'{self.user.username} {self.result}'
-
-    def get_absolute_url(self):
-        return '/event'
