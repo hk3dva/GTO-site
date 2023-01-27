@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1> Редактирование ивент</h1>
+
+    <form method="post">
+        {{ formset.management_form }}
+        {% csrf_token %}
+        <table>
+            {% for f in form %}
+                {{ f.as_p }}
+            {% endfor %}
+        </table>
+    </form>
+
+    <input type="button" value="Add More" id="add_more">
+    <button type="submit" name="send">Отправить</button>
+
+</body>
+</html>

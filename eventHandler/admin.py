@@ -1,7 +1,17 @@
 from django.contrib import admin
-from .models import Event, Team
+from .models import *
 
+admin.site.register(SportObject)
 
-# Register your models here.
-admin.site.register(Event)
 admin.site.register(Team)
+
+admin.site.register(Event)
+
+admin.site.register(SportTypeEvent)
+
+admin.site.register(SportTypeEventHasEvent)
+
+admin.site.register(SportType)
+
+admin.site.register(SportsmanSportTypeEvent)
+

@@ -1,15 +1,23 @@
 from django.urls import path
-
-from . import views
 from .views import *
 
+app_name = 'eventHandler'
 urlpatterns = [
-    path('', index, name='event'),
+    path('', myEvent, name='event'),
+    path('events', allEvents, name='allEvents'),
     path('createEvent/', createEvent, name='eventCreate'),
-    path('<int:pk>/update', eventUpdate.as_view(), name='eventUpdate'),
-    path('<int:pk>/delete', eventDelete.as_view(), name='eventDelete'),
+    path('SportTypeEventcreate/', SportTypeEventcreate, name='SportTypeEventcreate'),
 
-    path('teamCreate/', teamCreate, name='teamCreate'),
-    path('team/<int:pk>/update', teamUpdate.as_view(), name='teamUpdate'),
-    path('team/<int:pk>/delete', teamDelete.as_view(), name='teamDelete'),
+    path('profile/<int:pk>', profile.as_view(), name='profile'),
+
+    path('allSportsmans/', allSportsmans, name='allSportsmans'),
+    path('mySportsmans/', mySportsmans, name='mySportsmans'),
+
+    # path('<int:pk>/update', eventUpdate.as_view(), name='eventUpdate'),
+    # path('<int:pk>/delete', eventDelete.as_view(), name='eventDelete'),
+
+    path('sportCreate/', sportCreate, name='sportCreate'),
+    path('sportObjectCreate/', sportObjectCreate, name='sportObjectCreate'),
+
+    path('trainerAppoin/', trainerAppoin , name='trainerAppoin')
 ]
