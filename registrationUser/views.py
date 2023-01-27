@@ -4,14 +4,14 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import Group, User
 
-# Create your views here.
+
 def register(request):
     if request.method == "POST":
         registerForm = UserCreationForm(request.POST)
         if registerForm.is_valid():
             registerForm.save()
             Group.objects.get(name='sportsman').user_set.add(User.objects.last())
-            return redirect('resReg')
+            return redirect('/')
     else:
         registerForm = UserCreationForm()
 
@@ -21,18 +21,10 @@ def register(request):
     }
     return render(request, 'registrationUser/register.html', context)
 
-def resReg(request):
-    return render(request, 'registrationUser/resReg.html')
-
-def resLog(request):
-    return render(request, 'registrationUser/resLog.html')
-
-def Log(request):
-    return render(request, 'registrationUser/Log.html')
 
 def logIn(request):
     if request.user.is_authenticated:
-        return render(request, 'registrationUser/Log.html')
+        return redirect('/')
 
     if request.method == "POST":
         loginForm = AuthenticationForm(request=request,data=request.POST)
@@ -42,19 +34,18 @@ def logIn(request):
             user = authenticate(username=uname, password=upass)
             if user is not None:
                 login(request,user)
-                return render(request, 'registrationUser/resLog.html')
+                return redirect('/')
     else:
         loginForm = AuthenticationForm()
     return render(request,'registrationUser/login.html', {'form':loginForm})
 
 
-
 def logOut(request):
     logout(request)
-    return redirect('/register')
+    return redirect('/')
+
 
 def index(request):
-
     username = 'Аноним'
     if request.user.is_authenticated:
         username = request.user.username

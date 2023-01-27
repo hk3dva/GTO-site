@@ -1,5 +1,7 @@
 import pandas as pd
 
+gto = pd.read_excel('D:/GTO/gto_site/static/' + 'table.xlsx', sheet_name=None)
+
 def clean(line): #предварительная отчистка данных для сравнения
     new = line[line.find('от') + 3 :].split()
     new.pop(1)

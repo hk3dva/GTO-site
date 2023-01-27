@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" >
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" />
+		<title>{{ title }}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="" >
+		<link rel="stylesheet" href="{% static 'CSS/base.css' %}" type="text/css"/>
+		<script src="https://secure.exportkit.com/cdn/js/ek_googlefonts.js?v=6"></script>
+		<!-- Add your custom HEAD content here -->
+ 		{% block extrahead %}{% endblock %}
+	</head>
+	<body>
+		<header>
+			<div class="head_panel">
+				<img src="{% static 'CSS/skins/____1__1.png' %}" id="____1__1" />
+				<div id="__________" >
+					<span class="char">Информация</span>
+				</div>
+				<div id="___________ek1" >
+					<span class="char">Результаты</span>
+				</div>
+				<div id="___" >
+					<span class="char">СМИ</span>
+				</div>
+				<div id="___________" >
+					<span class="char">Калькулятор</span>
+				</div>
+				<div id="_________" >
+					<span class="char">Партнерам</span>
+				</div>
+				<div id="______ek1" >
+					<span class="char">Войти</span>
+				</div>
+
+				<div id="login"  >
+					<img src="{% static 'CSS/skins/login_1.png' %}" id="login_1" />
+				</div>
+			</div>
+		</header>
+
+	<div>
+			<img src="{% static 'CSS/skins/_________1.png' %}" id="_________1" />
+			<div id="_____________" >
+				<span class="char">%D0%BA%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9 </span> <span class="char">%D1%82%D0%B5%D0%BA%D1%81%D1%82</span>
+			</div>
+			<div id="_________________________" >
+				<span class="char">%D0%94%D0%BE%D0%B1%D1%80%D0%BE </span> <span class="char">%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D0%BE%D0%B2%D0%B0%D1%82%D1%8C </span> <br/><span class="char">%D0%B2 </span> <span class="char">%D1%81%D0%BF%D0%BE%D1%80%D1%82!</span>!
+			</div>
+			<img src="{% static 'CSS/skins/rectangle_1.png' %}" id="rectangle_1" />
+
+			<div id="frame_15"  >
+				<div id="______" >
+					<span class="char">%D0%93%D0%9E%D0%A1%D0%A2%D0%AF%D0%9C</span>
+				</div>
+
+				<div id="frame_12"  >
+
+				</div>
+				<img src="{% static 'CSS/skins/image_4.png' %}" id="image_4" />
+
+			</div>
+
+			<div id="frame_14"  >
+				<div id="________" >
+					<span class="char">%D0%9A%D0%9E%D0%9C%D0%90%D0%9D%D0%94%D0%90%D0%9C</span>
+				</div>
+
+				<div id="frame_12_ek1"  >
+
+				</div>
+				<img src="{% static 'CSS/skins/image_3.png' %}" id="image_3" />
+
+			</div>
+
+			<div id="frame_13"  >
+				<img src="{% static 'CSS/skins/image_2.png' %}" id="image_2" />
+				<div id="______________ek1" >
+					<span class="char">%D0%9E%D0%A0%D0%93%D0%90%D0%9D%D0%98%D0%97%D0%90%D0%A2%D0%9E%D0%A0%D0%90%D0%9C</span>
+				</div>
+
+				<div id="frame_12_ek2"  >
+
+				</div>
+
+			</div>
+
+			<div id="frame_7"  >
+				<div id="___________ek2" >
+					<span class="char">%D0%A3%D0%A7%D0%90%D0%A1%D0%A2%D0%9D%D0%98%D0%9A%D0%90%D0%9C</span>
+				</div>
+				<img src="{% static 'CSS/skins/image_1.png' %}" id="image_1" />
+
+				<div id="frame_12_ek3"  >
+
+				</div>
+
+			</div>
+
+		</div>
+		<script>var specialChars = document.querySelectorAll("span.char"); for(var c=0; c<specialChars.length; c++){ specialChars[c].innerHTML = decodeURIComponent(specialChars[c].innerHTML); }</script>
+	</body>
+</html>

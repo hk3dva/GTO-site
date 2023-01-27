@@ -3,27 +3,42 @@ from .forms import *
 from .models import *
 from django.views.generic import DetailView, DeleteView, UpdateView
 from django.contrib.auth.models import Group, User
+from django.forms import formset_factory
+from .utils import *
 
 # Create your views here.
-def index(request):
-    eventNameList = Event.objects.all()
-    teamList = Team.objects.all()
-    userList = AuthUser.objects.all()
-    trainerList = User.objects.filter(groups__name='trainers')
-    sportsmansList = User.objects.filter(groups__name='sportsman')
-
-    sportList = SportType.objects.all()
-    SportObjectList = SportObject.objects.all()
+def myEvent(request):
+    eventNameList = Event.objects.filter(owner=request.user.pk)
     context = {
+        'title': 'Список моих мероприятий',
         'events' : eventNameList,
-        'teams' : teamList,
-        'users' : userList,
-        'trainers' : trainerList,
-        'sportsmans' : sportsmansList,
-        'sports' : sportList,
-        'objects' : SportObjectList,
     }
     return render(request, 'eventHandler/event.html', context)
+
+def allSportsmans(request):
+    sportsmanList = AuthUser.objects.all() #.filter(groups__name='sportsman')
+    context = {
+        'title' : 'Список всех спортсменов',
+        'sportsmans' : sportsmanList,
+    }
+    return render(request, 'eventHandler/sportsmans.html', context)
+
+def mySportsmans(request):
+    sportsmanList = AuthUser.objects.filter(groups__name='sportsman', place_employment=request.user.place_employment)
+    context = {
+        'title': 'Список моих спортсменов',
+        'sportsmans' : sportsmanList,
+    }
+    return render(request, 'eventHandler/sportsmans.html', context)
+
+def allEvents(request):
+    eventNameList = Event.objects.all()
+    context = {
+        'title': 'Список всех мероприятий',
+        'events': eventNameList,
+    }
+    return render(request, 'eventHandler/event.html', context)
+
 
 def sportCreate(request):
     if request.method == "POST":
@@ -35,13 +50,14 @@ def sportCreate(request):
         form = createSportType()
 
     context = {
+        'title': 'Создание вида спорта',
         'form' : form,
     }
     return render(request, 'eventHandler/sportCreate.html', context)
 
 def sportObjectCreate(request):
     if request.method == "POST":
-        form = createSportObject(request.POST)
+        form = createSportObject(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('/event')
@@ -49,18 +65,21 @@ def sportObjectCreate(request):
         form = createSportObject()
 
     context = {
+        'title': 'Создание спортивного обьекта',
         'form' : form,
     }
     return render(request, 'eventHandler/sportObjectCreate.html', context)
 
 def SportTypeEventcreate(request):
     if request.method == "POST":
-        form = createSportTypeEvent(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/event')
+        if request.POST.get("send"):
+            form = form(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('/event')
+
     else:
-        form = createSportTypeEvent()
+        form = formset_factory(createSportTypeEvent, extra=1) #, can_delete=True
 
     context = {
         'form': form,
@@ -69,12 +88,14 @@ def SportTypeEventcreate(request):
 
 def createEvent(request):
     if request.method == "POST":
-        form = createEventForm(request.POST)
+        form = createEventForm(request.user, request.POST)
         if form.is_valid():
-            form.save()
+            ptype = form.save(commit=False)
+            ptype.owner = request.user
+            ptype.save()
             return redirect('/event')
     else:
-        form = createEventForm()
+        form = createEventForm(request.user)
 
     # form.fields["persons"].queryset = User.objects.filter(groups__name='sportsman')
 
@@ -100,37 +121,17 @@ def trainerAppoin(request):
     }
     return render(request, 'eventHandler/appointTrainer.html', context)
 
-class eventUpdate(UpdateView):
-    model = Event
-    template_name = 'eventHandler/eventUpdate.html'
-    form_class = createEventForm
+class profile(UpdateView):
+    model = AuthUser
+    template_name = 'eventHandler/profile.html'
+    form_class = userEdit
 
-class eventDelete(DeleteView):
-    model = Event
-    success_url = '/event'
-    template_name = 'eventHandler/eventDelete.html'
-
-
-def teamCreate(request):
-    if request.method == "POST":
-        form = createTeamForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/event')
-    else:
-        form = createTeamForm()
-
-    context = {
-        'form' : form,
-    }
-    return render(request, 'eventHandler/team.html', context)
-
-class teamUpdate(UpdateView):
-    model = Team
-    template_name = 'eventHandler/teamUpdate.html'
-    form_class = createTeamForm
-
-class teamDelete(DeleteView):
-    model = Team
-    success_url = '/event'
-    template_name = 'eventHandler/teamDelete.html'
+# class eventUpdate(UpdateView):
+#     model = Event
+#     template_name = 'eventHandler/eventUpdate.html'
+#     form_class = createEventForm
+#
+# class eventDelete(DeleteView):
+#     model = Event
+#     success_url = '/event'
+#     template_name = 'eventHandler/eventDelete.html'

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<h1>Пользователь</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+  <p>Фото:{{ form.photo }}</p>
+  <p>Фамилия: {{ form.last_name }}</p>
+  <p>Имя: {{ form.first_name }}</p>
+  <p>Место учебы: {{ form.place_employment }}</p>
+  <p>id ГТО: {{ form.gto_id }}</p>
+  <p>День рождения: {{ form.birthday_date }}</p>
+
+  <button type="submit">Обновить данные пользователя</button>
+</form>
+</body>
+</html>

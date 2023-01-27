@@ -1,0 +1,296 @@
+body {font-family:"Arial"; overflow-x:hidden; }
+
+img {display: block; margin: 0px; border: none; padding: 0px; }
+
+#_bg__frame_1 {
+	top: 0px;
+	left: 0px;
+	width: 1413px;
+	height: 2955px;
+	background:rgba(255,255,255,1);
+}
+
+.head_panel {
+	width: 1413px;
+	height: 78px;
+	background: rgb(50, 65, 119);
+}
+
+#____1__1 {
+	top: 14px;
+	left: 40px;
+	width: 53px;
+	height: 50px;
+}
+
+
+#__________ {
+	top: 26px;
+	left: 136px;
+	width: 158px;
+	height: 40px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 20px;
+	text-align: left;
+	color:#FFFFFF;
+}
+
+
+#___________ek1 {
+	top: 26px;
+	left: 309px;
+	width: 137px;
+	height: 40px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 20px;
+	text-align: left;
+	color:#FFFFFF;
+}
+
+
+#___ {
+	top: 26px;
+	left: 459px;
+	width: 70px;
+	height: 40px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 20px;
+	text-align: left;
+	color:#FFFFFF;
+}
+
+
+#___________ {
+	top: 26px;
+	left: 544px;
+	width: 151px;
+	height: 40px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 20px;
+	text-align: left;
+	color:#FFFFFF;
+}
+
+
+#_________ {
+	top: 26px;
+	left: 710px;
+	width: 137px;
+	height: 40px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 20px;
+	text-align: left;
+	color:#FFFFFF;
+}
+
+
+#______ek1 {
+	top: 26px;
+	left: 1250px;
+	width: 85px;
+	height: 40px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 20px;
+	text-align: left;
+	color:#FFFFFF;
+}
+
+#login {
+	top: 13px;
+	left: 1330px;
+	width: 43px;
+	height: 52px;
+}
+
+#login_1 {
+	top: 0px;
+	left: 0px;
+	width: 43px;
+	height: 52px;
+}
+
+
+#_________1 {
+	top: 78px;
+	left: 0px;
+	width: 1413px;
+	height: 377px;
+}
+
+
+#_____________ {
+	top: 305px;
+	left: 822px;
+	width: 165px;
+	height: 40px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: left;
+	color:#314077;
+}
+
+
+#_________________________ {
+	top: 165px;
+	left: 822px;
+	width: 522px;
+	height: 158px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 48px;
+	font-weight: bold;
+	text-align: left;
+	color:#FFFFFF;
+}
+
+
+#rectangle_1 {
+	top: 515px;
+	left: 75px;
+	width: 1263px;
+	height: 276px;
+}
+
+#frame_15 {
+	top: 2429px;
+	left: 0px;
+	width: 1413px;
+	height: 526px;
+}
+
+#______ {
+	top: 40px;
+	left: 622px;
+	width: 241px;
+	height: 96px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 48px;
+	text-align: left;
+	color:#000000;
+}
+
+#frame_12 {
+	top: 136px;
+	left: 135px;
+	width: 494px;
+	height: 300px;
+}
+
+#image_4 {
+	top: 136px;
+	left: 828px;
+	width: 450px;
+	height: 300px;
+}
+
+#frame_14 {
+	top: 1903px;
+	left: 0px;
+	width: 1413px;
+	height: 526px;
+}
+
+#________ {
+	top: 40px;
+	left: 581px;
+	width: 337px;
+	height: 96px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 48px;
+	text-align: left;
+	color:#000000;
+}
+
+#frame_12_ek1 {
+	top: 136px;
+	left: 784px;
+	width: 494px;
+	height: 300px;
+}
+
+#image_3 {
+	top: 126px;
+	left: 135px;
+	width: 494px;
+	height: 309.33px;
+}
+
+#frame_13 {
+	top: 1377px;
+	left: 0px;
+	width: 1413px;
+	height: 526px;
+}
+
+#image_2 {
+	top: 136px;
+	left: 847px;
+	width: 381.91px;
+	height: 300px;
+}
+
+
+#______________ek1 {
+	top: 40px;
+	left: 521px;
+	width: 459px;
+	height: 96px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 48px;
+	text-align: left;
+	color:#000000;
+}
+
+#frame_12_ek2 {
+	top: 136px;
+	left: 135px;
+	width: 494px;
+	height: 300px;
+}
+#frame_7 {
+	top: 851px;
+	left: 0px;
+	width: 1413px;
+	height: 526px;
+}
+
+#___________ek2 {
+	top: 40px;
+	left: 562px;
+	width: 378px;
+	height: 96px;
+	overflow: hidden;
+	font-family: PT Sans Caption;
+	font-size: 48px;
+	text-align: left;
+	color:#000000;
+}
+
+
+#image_1 {
+	top: 136px;
+	left: 134px;
+	width: 494px;
+	height: 300px;
+}
+
+#frame_12_ek3 {
+	top: 136px;
+	left: 785px;
+	width: 494px;
+	height: 300px;
+}
+
+
+/* Add your custom CSS here */

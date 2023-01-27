@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<h1>Список спортсменов</h1>
+{% for sportsman in sportsmans %}
+<div class="border border-primary">
+    <a href="{% url 'eventHandler:profile' sportsman.pk %}">
+        {{ sportsman.pk }}
+      <p>{{ sportsman.last_name }}</p>
+      <p>{{ sportsman.first_name }}</p>
+        {% if sportsman.photo %}
+            <img src="{{ MEDIA_URL }}{{ sportsman.photo.url }}"/>
+        {% endif %}
+      <p>{{ sportsman.place_employment }}</p>
+      <p>{{ sportsman.gto_id }}</p>
+      <p>{{ sportsman.birthday_date }}</p>
+    </a>
+</div>
+{% endfor %}
+</body>
+</html>
