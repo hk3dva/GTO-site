@@ -1,25 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-<h1>Список спортсменов</h1>
-{% for sportsman in sportsmans %}
-<div class="border border-primary">
-    <a href="{% url 'eventHandler:profile' sportsman.pk %}">
-        {{ sportsman.pk }}
-      <p>{{ sportsman.last_name }}</p>
-      <p>{{ sportsman.first_name }}</p>
-        {% if sportsman.photo %}
-            <img src="{{ MEDIA_URL }}{{ sportsman.photo.url }}"/>
-        {% endif %}
-      <p>{{ sportsman.place_employment }}</p>
-      <p>{{ sportsman.gto_id }}</p>
-      <p>{{ sportsman.birthday_date }}</p>
-    </a>
-</div>
-{% endfor %}
-</body>
-</html>
+{% extends 'eventHandler/baseEvent.html' %}
+
+{% load static %}
+
+{% block extrahead %}
+{% endblock%}
+
+
+{% block title %}
+{{ title }}
+{% endblock%}
+
+{% block content %}
+<h1>Список {{ name }}</h1>
+    {% for sportsman in sportsmans %}
+
+    <div class="card mb-3" style="max-width: 540px;">
+      <div class="row g-0 p-1">
+        <div class="col-md-4 justify-content-center">
+            {% if sportsman.photo %}
+                <img src="{{ MEDIA_URL }}{{ sportsman.photo.url }}" width="250px" class="img-fluid rounded-start mt-1"/>
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"> {{ sportsman.last_name }} {{ sportsman.first_name }} </h5>
+            <p class="card-text">
+              {{ sportsman.birthday_date }}
+            </p>
+            <p class="card-text">
+                <small class="text-muted">Место жительства: {{ sportsman.city }}</small></br>
+                {% if sportsman.organization %}
+                    <small class="text-muted">Место учебы: {{ sportsman.organization }}</small></br>
+                {% else %}
+                    <small class="text-muted">Место учебы: Не указано </small></br>
+                {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+{% endblock%}

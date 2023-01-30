@@ -1,15 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1> Создать вид спорта</h1>
+{% extends 'eventHandler/baseEvent.html' %}
+
+{% load static %}
+
+{% block extrahead %}
+{% endblock%}
+
+
+{% block title %}
+{{ title }}
+{% endblock%}
+
+{% block content %}
+    <h1> Зарегестрировать вид спорта</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Создать вид спорта</button>
+        <div class="form-group mb-3">
+            <label>Название вида (Бег на 100 метров)</label>
+            {{ form.name }}
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Кто может участвовать в этом вид спорта</label>
+            {{ form.for_who }}
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Укажите возрастные ограничения от {{ form.age_min }} до {{ form.age_max }} </label>
+
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Официальное соревнование?</label>
+            {{ form.custom }}
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Командное соревнование?</label>
+            {{ form.teamable }}
+        </div>
+        <button type="submit" class="btn btn-primary">Создать вид спорта</button>
     </form>
-</body>
-</html>
+{% endblock%}

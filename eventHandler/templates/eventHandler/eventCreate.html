@@ -1,15 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1> Создать ивент</h1>
-    <form method="post" enctype="multipart/form-data">
+{% extends 'eventHandler/baseEvent.html' %}
+
+{% load static %}
+
+{% block extrahead %}
+{% endblock%}
+
+
+{% block title %}
+{{ title }}
+{% endblock%}
+
+{% block content %}
+    <h1> Создать мероприятие </h1>
+    <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Создать ивент</button>
+        <div class="form-group mb-3">
+            <label>Название (Юные дарования)</label>
+            {{ form.name }}
+        </div>
+        <div class="form-group mb-3">
+            <label>Укажите возрастные ограничения от {{ form.age_min }} до {{ form.age_max }} </label>
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Загрузите фотографию или Афишу </label>
+            {{ form.photo }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Создать мероприятие</button>
     </form>
-</body>
-</html>
+{% endblock%}

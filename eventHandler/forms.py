@@ -1,17 +1,26 @@
 from django import forms
 from django.forms import ModelForm
 from .models import *
-from django.contrib.auth.models import User
 
 class userEdit(ModelForm):
     class Meta:
-        model = AuthUser
-        fields = ['first_name', 'last_name', 'birthday_date', 'photo', 'place_employment', 'gto_id']
+        model = Account
+        fields = ['first_name', 'last_name', 'birthday_date', 'photo', 'gto_id']
 
 class createSportType(ModelForm):
     class Meta:
         model = SportType
-        fields = ['name', 'custom', 'for_who']
+        fields = ['name', 'custom', 'for_who', 'teamable', 'age_max', 'age_min']
+        widgerts = {
+            'name' : forms.TextInput(attrs={'type' : "text",
+                                    'class' : "form-control", 'id' : 'name',
+                                    'placeholder' : "Укажите название вида спорта"}),
+
+        }
+class createSportObject(ModelForm):
+    class Meta:
+        model =  SportObject
+        fields = ['name', 'address', 'photo', 'city', 'sport_type']
 
 class createTeamForm(ModelForm):
     class Meta:
@@ -21,15 +30,12 @@ class createTeamForm(ModelForm):
             'name' : forms.TextInput(),
         }
 
-class createSportObject(ModelForm):
-    class Meta:
-        model =  SportObject
-        fields = ['name', 'address', 'photo']
+
 
 class createEventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'status', 'settings', 'min_age', 'max_age', 'photo']
+        fields = ['name', 'age_min', 'age_max', 'photo']
         widgerts = {
             'name' : forms.TextInput(),
         }
@@ -39,10 +45,10 @@ class createEventForm(ModelForm):
         self.owner = user
 
 
-class createSportTypeEvent(ModelForm):
+class createEventSettings(ModelForm):
     class Meta:
         model = SportTypeEvent
-        fields = ['date', 'time', 'sport_object', 'sport_type', 'sportsmans']
+        fields = ['date', 'time', 'sport_object', 'sport_type']
 
-class appoinTrainerForm(forms.Form):
-    names = forms.ModelMultipleChoiceField(queryset = User.objects.filter(groups__name='sportsman'))
+class appoinForm(forms.Form):
+    names = forms.ModelMultipleChoiceField(queryset = Account.objects.all()) # filter(groups__name='sportsman')

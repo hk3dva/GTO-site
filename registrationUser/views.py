@@ -2,15 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.models import Group, User
-
+from django.contrib.auth.models import Group
+from eventHandler.models import Account
 
 def register(request):
     if request.method == "POST":
         registerForm = UserCreationForm(request.POST)
         if registerForm.is_valid():
             registerForm.save()
-            Group.objects.get(name='sportsman').user_set.add(User.objects.last())
+            Group.objects.get(name='sportsman').user_set.add(Account.objects.last())
             return redirect('/')
     else:
         registerForm = UserCreationForm()
@@ -22,7 +22,11 @@ def register(request):
     return render(request, 'registrationUser/register.html', context)
 
 
-def logIn(request):
+def logOut(request):
+    logout(request)
+    return redirect('/')
+
+def index(request):
     if request.user.is_authenticated:
         return redirect('/')
 
@@ -37,20 +41,9 @@ def logIn(request):
                 return redirect('/')
     else:
         loginForm = AuthenticationForm()
-    return render(request,'registrationUser/login.html', {'form':loginForm})
 
-
-def logOut(request):
-    logout(request)
-    return redirect('/')
-
-
-def index(request):
-    username = 'Аноним'
-    if request.user.is_authenticated:
-        username = request.user.username
     context = {
-        'name': username
+        'form' : loginForm,
     }
     return render(request, 'registrationUser/index.html', context)
 
