@@ -139,7 +139,8 @@ def EventSettings(request, pk):
     if request.method == "POST":
         form = createEventSettings(request.POST)
         if form.is_valid():
-            form.save()
+            t = form.save()
+            temp = SportTypeEventHasEvent.objects.create(event=Event.objects.get(pk=pk), sport_type_event=t)
         return redirect('/event')
     else:
         form = createEventSettings()
@@ -150,14 +151,72 @@ def EventSettings(request, pk):
     return render(request, 'eventHandler/SportTypeEventcreate.html', context)
 
 
+def sportObjectSettings(request, pk):
+    if request.method == "POST":
+        form = inventoryForm(request.POST)
+        if form.is_valid():
+            temp = Sport_type_in_sport_object.objects.filter(sport_object=pk, sport_type=form.cleaned_data['sport'])[0]
+            temp.count_inventory = form.cleaned_data['count']
+            temp.save()
+        return redirect('/event')
+    else:
+        form = inventoryForm()
+
+    form.fields["sport"].queryset = SportObject.objects.get(pk=pk).sport_type.all()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'eventHandler/SportTypeEventSettings.html', context)
+
+
+def SportsmanAdd(request, pk):
+    if request.method == "POST":
+        form = UserAdd(request.POST)
+        if form.is_valid():
+            for el in form.cleaned_data['sportsmans']:
+                SportsmanSportTypeEvent.objects.create(sport_type_event=SportTypeEvent.objects.get(pk=pk), sportsman=el)
+        return redirect('/event')
+    else:
+        form = UserAdd()
+    form.fields["sportsmans"].queryset = Account.objects.filter(groups__name='sportsman', organization=request.user.organization)
+    context = {
+        'form': form,
+    }
+    return render(request, 'eventHandler/addSportsmansToEvent.html', context)
+
+def eventShow(request, event):
+    event = Event.objects.get(pk=event)
+    context = {
+        'event': event,
+    }
+    return render(request, 'eventHandler/showEvent.html', context)
+
+def resultEvent(request, event, sport):
+
+    eventE = Event.objects.get(pk=event)
+    sportE = SportTypeEvent.objects.get(pk=sport)
+
+    if request.method == "POST":
+        form = addResultForm(request.POST)
+        if form.is_valid():
+            temp = SportsmanSportTypeEvent.objects.get(sportsman=form.cleaned_data['sportsman'], sport_type_event=sportE)
+            temp.result = form.cleaned_data['result']
+            temp.save()
+        return redirect('/event/Eventresults/' + str(event))
+    else:
+        form = addResultForm()
+
+    form.fields["sportsman"].queryset = sportE.sportsmans
+
+    context = {
+        'event' : eventE,
+        'sport' : sportE,
+        'form': form,
+    }
+    return render(request, 'eventHandler/addResult.html', context)
 def  calculator(request):
     return render(request, 'eventHandler/event.html')
-
-
-
-def results(request):
-    return render(request, 'eventHandler/event.html')
-
 
 class profile(DetailView):
     model = Account

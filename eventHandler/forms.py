@@ -30,7 +30,10 @@ class createTeamForm(ModelForm):
             'name' : forms.TextInput(),
         }
 
-
+class UserAdd(ModelForm):
+    class Meta:
+        model = SportTypeEvent
+        fields = ['sportsmans', 'sport_type']
 
 class createEventForm(ModelForm):
     class Meta:
@@ -50,5 +53,15 @@ class createEventSettings(ModelForm):
         model = SportTypeEvent
         fields = ['date', 'time', 'sport_object', 'sport_type']
 
+
+
+class addResultForm(forms.Form):
+    sportsman = forms.ModelChoiceField(queryset = Account.objects.all())
+    result = forms.CharField()
+
 class appoinForm(forms.Form):
     names = forms.ModelMultipleChoiceField(queryset = Account.objects.all()) # filter(groups__name='sportsman')
+
+class inventoryForm(forms.Form):
+    count = forms.IntegerField()
+    sport = forms.ModelChoiceField(queryset=SportType.objects.all())

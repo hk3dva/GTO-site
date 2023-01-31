@@ -20,7 +20,7 @@
 	<body>
 		<header class="p-3 mb-3 border-bottom" style="background: rgb(50, 65, 119)">
 			<div class="container">
-				<div class="row">
+				<div class="row" style="height: 50px;">
 
 					<div class="col">
 						<img src="{% static 'CSS/skins/Logo.png' %}" id="1" />
@@ -31,7 +31,7 @@
 					</div>
 
 					<div class="col text-white fs-5 my-auto">
-						<span><a href="{% url 'eventHandler:results' %}" class="nav-link">Результаты</a></span>
+						<span><a href="{% url 'eventHandler:event' %}" class="nav-link">Результаты</a></span>
 					</div>
 
 					<div class="col text-white fs-5 my-auto ">
@@ -54,12 +54,11 @@
 					<div class="col text-white fs-4" >
 						{% if user.photo %}
 						<a href="{% url 'eventHandler:profile' user.pk %}" class="nav-link">
-							<img src="{{ MEDIA_URL }}{{ user.photo.url }}" class="rounded-circle bg-info" style="width:20%;">
+							<img src="{{ MEDIA_URL }}{{ user.photo.url }}" class="rounded-circle img-fluid img-responsive" style="height: 50px">
 						</a>
-
 						{% else %}
 							<a href="{% url 'eventHandler:profile' user.pk %}" class="nav-link">
-								<img src="{% static 'CSS/skins/login_1.png' %}"/>
+								<img src="{% static 'CSS/skins/login_1.png' %}" class="rounded-circle img-fluid" style="height: 50px">
 							</a>
 						{% endif %}
 					</div>
@@ -67,8 +66,8 @@
 						<div class="col text-white fs-5 my-auto">
 							<span><a href="{% url 'registrationUser:index' %}" class="nav-link">Войти</a></span>
 						</div>
-						<div class="col text-white fs-4" >
-							<img src="{% static 'CSS/skins/login_1.png' %}"/>
+						<div class="col text-white fs-4">
+							<img src="{% static 'CSS/skins/login_1.png' %}" class="rounded-circle img-fluid" style="height: 50px">
 						</div>
 					{% endif %}
 				</div>

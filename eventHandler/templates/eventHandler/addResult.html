@@ -1,0 +1,23 @@
+{% extends 'eventHandler/baseEvent.html' %}
+
+{% load static %}
+
+{% block extrahead %}
+{% endblock%}
+
+
+{% block title %}
+{{ title }}
+{% endblock%}
+
+{% block content %}
+{{ event.name }}
+
+    <h1> Укажите Результат пользователя по {{ sport.sport_type }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.sportsman }}
+        {{ form.result }}
+        <button type="submit" class="btn btn-primary">Подтверидить</button>
+    </form>
+{% endblock%}

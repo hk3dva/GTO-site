@@ -1,19 +1,20 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from .forms import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import Group
-from eventHandler.models import Account
+
 
 def register(request):
     if request.method == "POST":
-        registerForm = UserCreationForm(request.POST)
+        registerForm = customCreateUser(request.POST)
         if registerForm.is_valid():
-            registerForm.save()
-            Group.objects.get(name='sportsman').user_set.add(Account.objects.last())
+            t = registerForm.save()
+            Group.objects.get(name='sportsman').user_set.add(t)
+
             return redirect('/')
     else:
-        registerForm = UserCreationForm()
+        registerForm = customCreateUser()
 
     context = {
         'title' : 'Страница Регистрации',

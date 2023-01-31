@@ -1,0 +1,39 @@
+{% extends 'eventHandler/baseEvent.html' %}
+
+{% load static %}
+
+{% block extrahead %}
+{% endblock%}
+
+
+{% block title %}
+{{ title }}
+{% endblock%}
+
+{% block content %}
+
+    <h1> Укажите кол-во инвентаря в спортивном обьекте</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class='col'>
+                <p>Вид спорта</p>
+            </div>
+            <div class='col'>
+                <p>Кол-во инвенторя</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class='col'>
+                <p>{{ form.sport}}</p>
+            </div>
+            <div class='col'>
+                <p>{{ form.count }}</p>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Подтверидить</button>
+    </form>
+{% endblock%}

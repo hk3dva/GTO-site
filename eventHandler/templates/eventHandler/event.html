@@ -16,6 +16,7 @@
 <h1>Мероприятия</h1>
     <li><a href="{% url 'eventHandler:sportCreate' %}">Создать вид спорта</a> + </li>
     <li><a href="{% url 'eventHandler:sportObjectCreate' %}">Создать спортивный обьект спорта</a> + </li>
+    <li><a href="{% url 'eventHandler:sportObjectSettings' 1 %}">Настройка спортивного обьекта</a> + </li>
     <li><a href="{% url 'eventHandler:eventCreate' %}">Создать мероприятие</a> + </li>
     <li>Назначить: <a href="{% url 'eventHandler:trainerAppoin' %}">Тренер</a>,
         <a href="{% url 'eventHandler:organizerAppoin' %}">Организатор</a> +
@@ -24,8 +25,14 @@
     <li><a href="{% url 'eventHandler:event' %}">Посмотреть мои мероприятия</a> + </li>
     <li><a href="{% url 'eventHandler:allSportsmans' %}">Все спортсмены</a> + </li>
     <li><a href="{% url 'eventHandler:mySportsmans' %}">Мои спортсмены</a> + </li>
-    <li><a href="{% url 'eventHandler:EventSettings' 1%}">Добавить соревнования в мероприятие </a></li>
+    <li><a href="{% url 'eventHandler:EventSettings' 1%}">Добавить соревнования в мероприятие</a> + </li>
+    <li><a href="{% url 'eventHandler:SportsmanAdd' 1 %}">Добавить пользователя на соревнования</a> + </li>
+
+    <li><a href="{% url 'eventHandler:eventShow' 1 %}">Посмотреть информацию о соревновании</a> + </li>
+
     <li><a href="{% url 'eventHandler:calculator' %}">Калькулятор</a></li>
+
+
 
 
 

@@ -1,0 +1,26 @@
+{% extends 'eventHandler/baseEvent.html' %}
+
+{% load static %}
+
+{% block extrahead %}
+{% endblock%}
+
+
+{% block title %}
+{{ title }}
+{% endblock%}
+
+{% block content %}
+    <h1>Информация об ивенте</h1>
+    {% for el in event.settings.all %}
+
+        <a href="{% url 'eventHandler:resultEvent' event.pk el.pk %}">
+        <div class="form-group mb-3">
+            <div>
+                {{ el.date }} {{ el.time }}
+            </div>
+                {{ el.sport_type }}
+        </div>
+        </a>
+    {% endfor %}
+{% endblock %}

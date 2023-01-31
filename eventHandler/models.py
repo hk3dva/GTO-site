@@ -19,11 +19,16 @@ class Organization(models.Model):
         return f'{self.name}'
 
 class Account(AbstractUser):
+    choice_gender =(
+        (0, 'Женщина'),
+        (1, 'Мужчина')
+    )
     birthday_date = models.DateField(blank=True, null=True)
     photo = models.ImageField(upload_to='user', blank=True, null=True)
     gto_id = models.IntegerField(blank=True, null=True, unique=True)
     city = models.ForeignKey(City, models.DO_NOTHING, db_column='city', null=True, blank=True,)
     organization = models.ForeignKey(Organization, models.DO_NOTHING, db_column='organization', null=True, blank=True)
+    gender = models.IntegerField(blank=True, null=True, choices=choice_gender, default=2)
     class Meta:
         managed = True
         db_table = 'Account'
@@ -83,6 +88,8 @@ class Sport_type_in_sport_object(models.Model):
         managed = True
         db_table = 'Sport_type_in_sport_object'
         unique_together = (('sport_object', 'sport_type'),)
+    def __str__(self):
+        return f'{self.sport_object} {self.sport_type}: {self.count_inventory}'
 
 class Standards(models.Model):
     sport_type = models.ForeignKey('SportType', models.DO_NOTHING)
@@ -152,7 +159,7 @@ class SportsmanSportTypeEvent(models.Model):
     sportsman = models.ForeignKey(Account, models.DO_NOTHING, db_column='sportsman')
     result = models.CharField(max_length=100, blank=True, null=True)
     sport_type_event = models.ForeignKey(SportTypeEvent, models.DO_NOTHING)
-
+    verified = models.BooleanField(default=False, blank=True, null=True)
     class Meta:
         managed = True
         db_table = 'sportsman_sport_type_event'
